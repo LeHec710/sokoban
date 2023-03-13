@@ -30,13 +30,17 @@ class Plateau
     #[Groups(['plateau:list', 'plateau:item'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 11)]
     #[Groups(['plateau:list', 'plateau:item'])]
-    private ?string $rows = null;
+    private ?int $rows = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 11)]
     #[Groups(['plateau:list', 'plateau:item'])]
-    private ?string $cols = null;
+    private ?int $cols = null;
+
+    #[ORM\Column(length: 10000)]
+    #[Groups(['plateau:list', 'plateau:item'])]
+    private ?array $grid = null;
 
     public function getId(): ?int
     {
@@ -55,26 +59,38 @@ class Plateau
         return $this;
     }
 
-    public function getRows(): ?string
+    public function getRows(): ?int
     {
         return $this->rows;
     }
 
-    public function setRows(string $rows): self
+    public function setRows(int $rows): self
     {
         $this->rows = $rows;
 
         return $this;
     }
 
-    public function getCols(): ?string
+    public function getCols(): ?int
     {
         return $this->cols;
     }
 
-    public function setCols(string $cols): self
+    public function setCols(int $cols): self
     {
         $this->cols = $cols;
+
+        return $this;
+    }
+
+    public function getGrid(): ?array
+    {
+        return $this->grid;
+    }
+
+    public function setGrid(array $grid): self
+    {
+        $this->grid = $grid;
 
         return $this;
     }
