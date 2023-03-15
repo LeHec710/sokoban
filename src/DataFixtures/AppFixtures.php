@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Plateaux;
+use App\Entity\Plateau;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -15,14 +15,14 @@ class AppFixtures extends Fixture
             ->setName("Cor")
             ->setRows(9)
             ->setCols(6)
-            ->setGrid(["######", "x.#px.", "..x..x", "#x..x#", "xx##..", "x.x##.", "xxx...", "...x##", "#x#.x#"]);
+            ->setGrid("######, x.#px., ..x..x, #x..x#, xx##.., x.x##., xxx..., ...x##, #x#.x#");
         $manager->persist($plateauC);
         $plateauH = new plateau;
         $plateauH
             ->setName("Hec")
             ->setRows(5)
             ->setCols(10)
-            ->setGrid(["#x..x##..x", "x####..x#.", "#xx..xx..#", "..#....x..", "##.x.p##x."]);
+            ->setGrid("#x..x##..x, x####..x#., #xx..xx..#, ..#....x.., ##.x.p##x.");
         $manager->persist($plateauH);
         $manager->flush();
     }

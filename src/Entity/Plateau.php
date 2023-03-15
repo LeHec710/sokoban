@@ -40,7 +40,7 @@ class Plateau
 
     #[ORM\Column(length: 10000)]
     #[Groups(['plateau:list', 'plateau:item'])]
-    private ?array $grid = null;
+    private ?string $grid = null;
 
     public function getId(): ?int
     {
@@ -83,12 +83,12 @@ class Plateau
         return $this;
     }
 
-    public function getGrid(): ?array
+    public function getGrid(): ?string
     {
         return $this->grid;
     }
 
-    public function setGrid(array $grid): self
+    public function setGrid(string $grid): self
     {
         $this->grid = $grid;
 
