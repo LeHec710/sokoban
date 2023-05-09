@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Animated, Image, StyleSheet } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-import tileTarget from "../../assets/tiles/Environment/environment_02.png";
+import tileTarget from "../../assets/tiles/target.png";
 
 import { useMap } from '../hooks/mapContext';
 import { useTarget } from '../hooks/targetContext';

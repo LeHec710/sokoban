@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from '../hooks/mapContext';
 import { usePlayer } from '../hooks/playerContext';
 
-import tilePlayer from "../../assets/tiles/Player/player_01.png";
+import tilePlayer from "../../assets/tiles/player.png";
 
 
 const Player = () => {

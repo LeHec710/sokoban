@@ -6,7 +6,7 @@ import { useMap } from '../hooks/mapContext';
 import { useBox } from '../hooks/boxContext';
 import { useTarget } from '../hooks/targetContext';
 
-import tileBox from "../../assets/tiles/Crates/crate_02.png";
+import tileBox from "../../assets/tiles/box.png";
 
 
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Image, FlatList, StyleSheet } from 'react-native';
 
-import tileGround from "../../assets/tiles/Ground/ground_06.png";
-import tileWall from "../../assets/tiles/Blocks/block_02.png";
+import tileGround from "../../assets/tiles/ground.png";
+import tileWall from "../../assets/tiles/wall.png";
 
 import { useMap } from '../hooks/mapContext';
 import { usePlayer } from '../hooks/playerContext';
