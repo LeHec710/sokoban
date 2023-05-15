@@ -7,6 +7,7 @@ import { TargetProvider } from "./hooks/targetContext"
 import { BoxProvider } from "./hooks/boxContext"
 
 import MapScreen from "./components/MapScreen"
+import { SwipeProvider } from "./hooks/SwipeContext"
 
 const Game = () => {
     return (
@@ -15,7 +16,9 @@ const Game = () => {
                 <TargetProvider>
                     <BoxProvider>
                         <PlayerProvider>
-                            <MapScreen />
+                            <SwipeProvider>
+                                <MapScreen />
+                            </SwipeProvider>
                         </PlayerProvider>
                     </BoxProvider>
                 </TargetProvider>

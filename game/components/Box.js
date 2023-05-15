@@ -36,16 +36,14 @@ const Box = ({ index, ...props }) => {
             }
 
             // check win
-            let win = true; // initialisation de la variable win à true
-            targetInfo.forEach(target => { // utilisation de forEach plutôt que map car on ne veut pas de tableau en sortie
+            // on check la victoire lorsqu'une boîte est déplacée
+            // pour ne pas le faire à chaque fois que la map es re-rendue
+            let wins = 0;
+            targetInfo.forEach(target => {
                 const matchingBox = boxInfo.find(box => box.position.x === target.position.x && target.position.y === target.position.y);
-                // vérification si la box est sur la target
-                if (!matchingBox) { // si pas de box sur la target, on passe win à false
-                    win = false;
-                    return; // on sort de la boucle car on a déjà déterminé que win est à false
-                }
+                if(matchingBox) wins++
             });
-            if(win === true) {
+            if(wins === targetInfo.length) {
                 setMapInfo({ ...mapInfo, win: true });
             }
         })

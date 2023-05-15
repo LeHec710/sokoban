@@ -32,7 +32,7 @@ export const MapProvider = ({ children }) => {
 
   useEffect(() => {
     if(mapInfo.win === true) {
-      console.log("you're the winner !!")
+      win()
     }
   }, [mapInfo])
 
