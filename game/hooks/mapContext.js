@@ -3,38 +3,35 @@ import { Dimensions } from 'react-native';
 
 export const MapContext = createContext();
 
-export const MapProvider = ({ children }) => {
-  const [mapInfo, setMapInfo] = useState({
-    grid: [
-        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
-        ['#', '.', '.', '.', '.', '.', '.', '.', 'X', '#'],
-        ['#', '.', '#', '#', '#', '#', '#', '.', 'C', '#'],
-        ['#', '.', '.', '.', '.', 'P', '.', '.', '.', '#'],
-        ['#', '.', '.', '#', '#', '#', '.', '.', '.', '#'],
-        ['#', '#', '.', '.', '.', 'X', '.', '.', '.', '#'],
-        ['#', '.', '.', '#', '.', '#', '.', 'C', '.', '#'],
-        ['#', '.', '.', '.', '.', '#', '.', '.', '.', '#'],
-        ['#', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
-        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
-    ],
-    cols: 10,
-    rows: 10,
-    loaded: false,
-    win: false
-  });
+export const MapProvider = ({ map, children }) => {
+  const [mapInfo, setMapInfo] = useState(map);
 
   useEffect(() => {
-    setMapInfo({...mapInfo, 
-      "loaded": true, 
-      "tileSize": (Dimensions.get('screen').width / mapInfo.cols)
-    })
-  }, [])
+    if(!map) return
+    map.grid = JSON.parse(map.grid)
+    map.tileSize = (Dimensions.get('screen').width / map.nbCols)
+    map.loaded = true
+    setMapInfo(map)
+  }, [map])
+
+  // useEffect(() => {
+  //   if(mapInfo === null) return
+  //   setMapInfo({...mapInfo, 
+  //     "loaded": true, 
+  //     "tileSize": (Dimensions.get('screen').width / mapInfo.nbCols)
+  //   })
+  // }, [mapInfo])
 
   useEffect(() => {
+    if(mapInfo === null) return
     if(mapInfo.win === true) {
       win()
     }
   }, [mapInfo])
+
+  const win = () => {
+    
+  }
 
   return (
     <MapContext.Provider value={{ mapInfo, setMapInfo }}>

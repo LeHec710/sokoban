@@ -10,7 +10,12 @@ export const PlayerProvider = ({ children }) => {
   const [playerInfo, setPlayerInfo] = useState()
   const { boxInfo, setBoxInfo } = useBox()
   const { mapInfo } = useMap()
-  const { grid } = mapInfo
+  const [grid, setGrid] = useState()
+
+  useEffect(() => {
+      if(!mapInfo) return
+      setGrid(mapInfo.grid);
+  }, [mapInfo])
 
   const move = async (dir) => {
     if(!playerInfo) return 
@@ -68,13 +73,6 @@ export const PlayerProvider = ({ children }) => {
       direction: dir,
     }))
   };
-
-  useEffect(() => {
-    return () => {
-
-    }
-  }, [])
-
 
   return (
     <PlayerContext.Provider value={{ playerInfo, setPlayerInfo, move }}>

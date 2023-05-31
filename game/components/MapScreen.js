@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Image, FlatList, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Image, FlatList, StyleSheet, Text } from 'react-native';
 
 import tileGround from "../../assets/tiles/ground.png";
 import tileWall from "../../assets/tiles/wall.png";
@@ -19,17 +19,30 @@ const MapScreen = () => {
     const { playerInfo, setPlayerInfo } = usePlayer();
     const { boxInfo, setBoxInfo } = useBox();
     const { targetInfo, setTargetInfo } = useTarget();
-    const { grid, rows, tileSize } = mapInfo;
+    const [grid, setGrid] = useState();
+    const [rows, setRows] = useState();
+    const [tileSize, setTileSize] = useState()
 
     useEffect(() => {
+        if(!mapInfo) return
+        if(mapInfo.loaded === false) return
+        setGrid(mapInfo.grid);
+        setRows(mapInfo.nbRows);
+        setTileSize(mapInfo.tileSize);
+    }, [mapInfo])
+
+    useEffect(() => {
+        if(!mapInfo) return
+        if(mapInfo.loaded === false) return
+        if("init" in mapInfo) return
         const boxes = []
         const targets = []
-        const updatedGrid = grid.map((row) => {
+        const updatedGrid = mapInfo.grid.map((row) => {
             return row.map((tile) => {
                 if (tile === 'P') {
                     const playerPosition = {
                         x: row.indexOf(tile),
-                        y: grid.indexOf(row)
+                        y: mapInfo.grid.indexOf(row)
                     };
                     setPlayerInfo({ ...playerInfo, position: playerPosition, direction: "down" });
                 } else if (tile === 'C') {
@@ -37,7 +50,7 @@ const MapScreen = () => {
                         id: boxes.length,
                         position: {
                             x: row.indexOf(tile),
-                            y: grid.indexOf(row)
+                            y: mapInfo.grid.indexOf(row)
                         }
                     };
                     boxes.push(box)
@@ -46,7 +59,7 @@ const MapScreen = () => {
                         id: targets.length,
                         position: {
                             x: row.indexOf(tile),
-                            y: grid.indexOf(row)
+                            y: mapInfo.grid.indexOf(row)
                         }
                     };
                     targets.push(target)
@@ -57,8 +70,9 @@ const MapScreen = () => {
 
         setBoxInfo(boxes);
         setTargetInfo(targets);
-        setMapInfo({ ...mapInfo, grid: updatedGrid, tileSize });
-    }, []);
+        setGrid(updatedGrid)
+        setMapInfo({ ...mapInfo, grid: updatedGrid, init: true });
+    }, [mapInfo]);
 
     const renderRow = ({ item: row, index: rowIndex }) => (
         <View style={[styles.row, { height: tileSize }]} key={`row-${rowIndex}`}>
@@ -77,30 +91,32 @@ const MapScreen = () => {
     );
 
     return (
-        <>
-            {mapInfo.loaded &&
-                <View style={[styles.test, { height: rows * tileSize }]}>
+        <View style={styles.container}>
+            
+            {mapInfo && tileSize &&
+                <View style={{ height: rows * tileSize }}>
                     <FlatList
                         style={styles.map}
-                        data={grid}
+                        data={mapInfo.grid}
                         renderItem={renderRow}
                         keyExtractor={(row, index) => `row-${index}`}
                     />
                 </View>
             }
 
-            <Player />
+            {mapInfo && <Player />}
 
-            {boxInfo.map((box, i) => <Box index={i} key={box.id} />)}
-
-            {targetInfo.map((target, i) => <Target index={i} key={target.id} />)}
-         </>
+            {mapInfo && boxInfo.map((box, i) => <Box index={i} key={box.id} />)}
+            {mapInfo && targetInfo.map((target, i) => <Target index={i} key={target.id} />)}
+         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    test: {
-        backgroundColor: 'blue'
+    container: {
+        // flex: 1,
+        // position: "absolute",
+        // bottom: 160,
     },
     row: {
         flexDirection: 'row',

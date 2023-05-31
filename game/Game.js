@@ -9,10 +9,10 @@ import { BoxProvider } from "./hooks/boxContext"
 import MapScreen from "./components/MapScreen"
 import { SwipeProvider } from "./hooks/SwipeContext"
 
-const Game = () => {
+const Game = ({map, ...props}) => {
     return (
         <View style={styles.container}>
-            <MapProvider>
+            <MapProvider map={map}>
                 <TargetProvider>
                     <BoxProvider>
                         <PlayerProvider>
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#738b8d',
         flexDirection: 'column',
     }
 });

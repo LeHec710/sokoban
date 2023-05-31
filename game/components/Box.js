@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Animated, Image, StyleSheet, Text } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -14,22 +14,27 @@ const Box = ({ index, ...props }) => {
     const { mapInfo, setMapInfo } = useMap();
     const { boxInfo, setBoxInfo } = useBox();
     const { targetInfo, setTargetInfo } = useTarget()
-    const { grid, cols, tileSize } = mapInfo;
+    const [tileSize, setTileSize] = useState()
+
+    useEffect(() => {
+        if(!mapInfo) return
+        setTileSize(mapInfo.tileSize);
+    }, [mapInfo])
 
     const posX = useRef(new Animated.Value(0)).current;
     const posY = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        if (!mapInfo.loaded) return
+        if(!mapInfo.loaded) return
         boxInfo.map((box, i) => {
             if (index === i) {
                 Animated.timing(posX, {
-                    toValue: box.position.x * tileSize,
+                    toValue: box.position.x * mapInfo.tileSize,
                     duration: 100,
                     useNativeDriver: true,
                 }).start();
                 Animated.timing(posY, {
-                    toValue: box.position.y * tileSize,
+                    toValue: box.position.y * mapInfo.tileSize,
                     duration: 100,
                     useNativeDriver: true,
                 }).start();
