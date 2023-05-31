@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Plateau;
+use App\Entity\Map;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -10,20 +10,46 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $plateauC = new plateau;
-        $plateauC
-            ->setName("Cor")
-            ->setRows(9)
-            ->setCols(6)
-            ->setGrid("######, x.#px., ..x..x, #x..x#, xx##.., x.x##., xxx..., ...x##, #x#.x#");
-        $manager->persist($plateauC);
-        $plateauH = new plateau;
-        $plateauH
-            ->setName("Hec")
-            ->setRows(5)
-            ->setCols(10)
-            ->setGrid("#x..x##..x, x####..x#., #xx..xx..#, ..#....x.., ##.x.p##x.");
-        $manager->persist($plateauH);
+        // MAP 1
+        $map1 = [
+            ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
+            ['#', '.', '.', '.', '.', '.', '.', '.', 'X', '#'],
+            ['#', '.', '#', '#', '#', '#', '#', '.', 'C', '#'],
+            ['#', '.', '.', '.', '.', 'P', '.', '.', '.', '#'],
+            ['#', '.', '.', '#', '#', '#', '.', '.', '.', '#'],
+            ['#', '#', '.', '.', '.', 'X', '.', '.', '.', '#'],
+            ['#', '.', '.', '#', '.', '#', '.', 'C', '.', '#'],
+            ['#', '.', '.', '.', '.', '#', '.', '.', '.', '#'],
+            ['#', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
+            ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+        ];
+        $map = new Map();
+        $map->setNbRows(10);
+        $map->setNbCols(10);
+        $map->setName("Level 1");
+        $map->setGrid(json_encode($map1));
+        $manager->persist($map);
+        
+        // MAP 1
+        $map2 = [
+            ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
+            ['#', '.', '.', '.', '.', '.', '.', '.', '', '#'],
+            ['#', '.', '#', '.', '.', '#', '#', '.', 'C', '#'],
+            ['#', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
+            ['#', '.', '#', '#', '#', '.', '.', 'X', '.', '#'],
+            ['#', '#', '.', '.', '.', 'X', '.', '.', '.', '#'],
+            ['#', '.', '.', '#', '.', '.', '.', 'C', '.', '#'],
+            ['#', '.', '.', '.', '.', '#', '.', '.', '.', '#'],
+            ['#', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
+            ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#']
+        ];
+        $map = new Map();
+        $map->setNbRows(10);
+        $map->setNbCols(10);
+        $map->setName("Level 2");
+        $map->setGrid(json_encode($map2));
+        $manager->persist($map);
+        
         $manager->flush();
     }
 }
