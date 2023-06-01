@@ -16,13 +16,13 @@ const Box = ({ index, ...props }) => {
     const { targetInfo, setTargetInfo } = useTarget()
     const [tileSize, setTileSize] = useState()
 
+    const posX = useRef(new Animated.Value(0)).current;
+    const posY = useRef(new Animated.Value(0)).current;
+
     useEffect(() => {
         if(!mapInfo) return
         setTileSize(mapInfo.tileSize);
     }, [mapInfo])
-
-    const posX = useRef(new Animated.Value(0)).current;
-    const posY = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         if(!mapInfo.loaded) return
@@ -49,6 +49,7 @@ const Box = ({ index, ...props }) => {
                 if(matchingBox) wins++
             });
             if(wins === targetInfo.length) {
+                alert('bravo !')
                 setMapInfo({ ...mapInfo, win: true });
             }
         })
@@ -56,8 +57,9 @@ const Box = ({ index, ...props }) => {
 
     return (
         <>
-            {boxInfo &&
+            {boxInfo && posX && posY &&
                 <Animatable.View duration={400} style={[styles.box, { width: tileSize, height: tileSize, translateX: posX, translateY: posY }]}>
+                    {/* <Text>{posX} - {posY}</Text> */}
                     <Image source={tileBox} style={{ width: tileSize, height: tileSize }} />
                 </Animatable.View>
             }
